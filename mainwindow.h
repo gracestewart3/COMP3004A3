@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "addeventdialog.h"
+#include "addpassengerdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,9 +19,11 @@ public:
 
 private slots:
     void on_add_event_clicked();
+    void on_add_passenger_clicked();
 
 private:
     Ui::MainWindow *ui;
     AddEventDialog *eventWindow;
+    AddPassengerDialog *passengerWindow;
 };
 #endif // MAINWINDOW_H

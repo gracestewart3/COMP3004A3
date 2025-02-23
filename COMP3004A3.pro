@@ -9,16 +9,22 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addbehaviourdialog.cpp \
     addeventdialog.cpp \
+    addpassengerdialog.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    addbehaviourdialog.h \
     addeventdialog.h \
+    addpassengerdialog.h \
     mainwindow.h
 
 FORMS += \
+    addbehaviourdialog.ui \
     addeventdialog.ui \
+    addpassengerdialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.

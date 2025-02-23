@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddEventDialog</class>
- <widget class="QDialog" name="AddEventDialog">
+ <class>AddBehaviourDialog</class>
+ <widget class="QDialog" name="AddBehaviourDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>313</width>
+    <width>400</width>
     <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Add Event</string>
+   <string>Add Behaviour</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>30</x>
      <y>240</y>
-     <width>171</width>
+     <width>341</width>
      <height>32</height>
     </rect>
    </property>
@@ -29,66 +29,55 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="button_pressed">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>50</y>
-     <width>171</width>
+     <x>20</x>
+     <y>40</y>
+     <width>201</width>
      <height>25</height>
     </rect>
    </property>
-   <property name="currentText">
-    <string>Door Obstruction</string>
-   </property>
-   <property name="placeholderText">
-    <string>Select Event</string>
-   </property>
    <item>
     <property name="text">
-     <string>Door Obstruction</string>
+     <string>Destination Button</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Fire Alarm (from building)</string>
+     <string>Help</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Fire Alarm (from elevator)</string>
+     <string>Open Door</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Overload</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Power Outage</string>
+     <string>Close Door</string>
     </property>
    </item>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>30</y>
-     <width>131</width>
+     <x>20</x>
+     <y>20</y>
+     <width>111</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Safety Event</string>
+    <string>Button Pressed:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>120</y>
-     <width>171</width>
+     <x>20</x>
+     <y>100</y>
+     <width>201</width>
      <height>25</height>
     </rect>
    </property>
@@ -96,22 +85,22 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>100</y>
-     <width>331</width>
+     <x>20</x>
+     <y>80</y>
+     <width>171</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Event Source (elevator #):</string>
+    <string>Timestep of Button Press:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_2">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>190</y>
-     <width>171</width>
+     <x>240</x>
+     <y>40</y>
+     <width>113</width>
      <height>25</height>
     </rect>
    </property>
@@ -119,14 +108,14 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>170</y>
-     <width>181</width>
+     <x>240</x>
+     <y>20</y>
+     <width>111</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Timestep of Event:</string>
+    <string>Floor:</string>
    </property>
   </widget>
  </widget>
@@ -135,7 +124,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>AddEventDialog</receiver>
+   <receiver>AddBehaviourDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -151,7 +140,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>AddEventDialog</receiver>
+   <receiver>AddBehaviourDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

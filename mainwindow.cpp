@@ -22,3 +22,9 @@ void MainWindow::on_add_event_clicked()
 
 }
 
+void MainWindow::on_add_passenger_clicked()
+{
+    passengerWindow = new AddPassengerDialog(this);
+    passengerWindow->show();
+
+}
