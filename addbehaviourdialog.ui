@@ -72,7 +72,7 @@
     <string>Button Pressed:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="timestep_of_press">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -95,7 +95,7 @@
     <string>Timestep of Button Press:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="floor">
    <property name="geometry">
     <rect>
      <x>240</x>

@@ -12,3 +12,4 @@ AddEventDialog::~AddEventDialog()
 {
     delete ui;
 }
+

@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::AddBehaviourDialog *ui;
+
+private slots:
+    void on_buttonBox_accepted();
 };
 
 #endif // ADDBEHAVIOURDIALOG_H
