@@ -25,6 +25,17 @@ void MainWindow::on_add_event_clicked()
 void MainWindow::on_add_passenger_clicked()
 {
     passengerWindow = new AddPassengerDialog(this);
+    QObject::connect(passengerWindow, &AddPassengerDialog::completePassenger, this, &MainWindow::handleNewPassenger);
     passengerWindow->show();
 
+}
+
+void MainWindow::handleNewPassenger(int floor, int time, Behaviour** behaviours, string direction){
+    Passenger* newPassenger = new Passenger(floor, time, behaviours,  direction);
+
+    //eventually add to some sort of list of passengers.....
+
+    QString message;
+    message = QString::asprintf("Passenger %d:\nStarting on floor %d at time %d, going %s.\n", newPassenger->id, floor, time, direction.c_str());
+    ui->passenger_display->setText(ui->passenger_display->text() + "\n" + message);
 }

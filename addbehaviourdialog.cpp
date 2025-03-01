@@ -8,6 +8,7 @@ AddBehaviourDialog::AddBehaviourDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->buttonBox->button(QDialogButtonBox::Ok)->setText("Add");
+    connect(ui->button_pressed, &QComboBox::currentTextChanged, this, &AddBehaviourDialog::onComboBoxTextChanged);
 }
 
 AddBehaviourDialog::~AddBehaviourDialog()
@@ -16,10 +17,34 @@ AddBehaviourDialog::~AddBehaviourDialog()
 }
 
 void AddBehaviourDialog::on_buttonBox_accepted(){
-    int floor_str = (ui->floor->text()).toInt();
+    qDebug() << "Accepted...";
+    std::string button;
+    bool isFloor;
+
+    if (!(ui->floor->text()).isEmpty()){
+        button = (ui->floor->text()).toStdString();
+        isFloor = true;
+    }
+    else{
+        button = (ui->button_pressed->currentText()).toStdString();
+        isFloor = false;
+    }
+
     int timestep = (ui->timestep_of_press->text()).toInt();
-    std::string button = (ui->button_pressed->currentText()).toStdString();
-    qInfo("Button: %s, Timestep: %d, Floor: %d", button.c_str(), timestep, floor_str);
-    qInfo("Completed behaviour!"); //change this out for something useful that actually creates a behaviour + updates display
+
+    emit updatePassenger(button.c_str(),timestep, isFloor);
+
     this->close();
+}
+
+void AddBehaviourDialog::onComboBoxTextChanged(const QString text) {
+        if (text == "Destination Button") {
+            ui->floor->show();
+            ui->floor_label->show();
+        }
+        else {
+            ui->floor->hide();
+            ui->floor->setText(QString(""));
+            ui->floor_label->hide();
+        }
 }

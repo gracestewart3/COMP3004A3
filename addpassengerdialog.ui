@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="startingFloor">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -52,7 +52,7 @@
     <string>Starting Floor:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="timestep">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -75,7 +75,7 @@
     <string>Timestep of Floor Request:</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="direction">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -86,12 +86,12 @@
    </property>
    <item>
     <property name="text">
-     <string>Up</string>
+     <string>up</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Down</string>
+     <string>down</string>
     </property>
    </item>
   </widget>
@@ -158,16 +158,6 @@
     <string>Add Behaviour</string>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="textBrowser">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>30</y>
-     <width>256</width>
-     <height>192</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
@@ -179,6 +169,25 @@
    </property>
    <property name="text">
     <string>Current Behaviours:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="behaviour_display">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>40</y>
+     <width>261</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

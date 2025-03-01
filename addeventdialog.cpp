@@ -6,6 +6,7 @@ AddEventDialog::AddEventDialog(QWidget *parent) :
     ui(new Ui::AddEventDialog)
 {
     ui->setupUi(this);
+
 }
 
 AddEventDialog::~AddEventDialog()

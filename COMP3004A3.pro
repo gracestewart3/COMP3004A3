@@ -12,14 +12,18 @@ SOURCES += \
     addbehaviourdialog.cpp \
     addeventdialog.cpp \
     addpassengerdialog.cpp \
+    behaviour.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    passenger.cpp
 
 HEADERS += \
     addbehaviourdialog.h \
     addeventdialog.h \
     addpassengerdialog.h \
-    mainwindow.h
+    behaviour.h \
+    mainwindow.h \
+    passenger.h
 
 FORMS += \
     addbehaviourdialog.ui \

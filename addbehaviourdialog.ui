@@ -45,17 +45,17 @@
    </item>
    <item>
     <property name="text">
-     <string>Help</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
      <string>Open Door</string>
     </property>
    </item>
    <item>
     <property name="text">
      <string>Close Door</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Help</string>
     </property>
    </item>
   </widget>
@@ -105,7 +105,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="floor_label">
    <property name="geometry">
     <rect>
      <x>240</x>
