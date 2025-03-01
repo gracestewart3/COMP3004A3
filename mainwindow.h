@@ -5,6 +5,7 @@
 #include "addeventdialog.h"
 #include "addpassengerdialog.h"
 #include "passenger.h"
+#include "safetyevent.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,5 +30,6 @@ private:
 
 public slots:
     void handleNewPassenger(int, int, Behaviour**, string);
+    void handleNewEvent(string, int, bool, int);
 };
 #endif // MAINWINDOW_H

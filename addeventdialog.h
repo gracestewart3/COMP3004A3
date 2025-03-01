@@ -2,6 +2,8 @@
 #define ADDEVENTDIALOG_H
 
 #include <QDialog>
+#include <string>
+using namespace std;
 
 namespace Ui {
 class AddEventDialog;
@@ -17,6 +19,13 @@ public:
 
 private:
     Ui::AddEventDialog *ui;
+
+private slots:
+    void onComboBoxTextChanged(const QString text);
+    void on_buttonBox_accepted();
+
+signals:
+    void completeEvent(string, int, bool, int);
 };
 
 #endif // ADDEVENTDIALOG_H

@@ -15,7 +15,8 @@ SOURCES += \
     behaviour.cpp \
     main.cpp \
     mainwindow.cpp \
-    passenger.cpp
+    passenger.cpp \
+    safetyevent.cpp
 
 HEADERS += \
     addbehaviourdialog.h \
@@ -23,7 +24,8 @@ HEADERS += \
     addpassengerdialog.h \
     behaviour.h \
     mainwindow.h \
-    passenger.h
+    passenger.h \
+    safetyevent.h
 
 FORMS += \
     addbehaviourdialog.ui \
