@@ -8,6 +8,7 @@
 #include "safetyevent.h"
 #include "simulationcontroller.h"
 #include <QDebug>
+#include <QString>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -33,6 +34,7 @@ private:
     int numPassengers;
     SafetyEvent** events;
     int numEvents;
+    void addElevator();
 
 public slots:
     void handleNewPassenger(int, int, Behaviour**, int, string);

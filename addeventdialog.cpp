@@ -16,7 +16,6 @@ AddEventDialog::~AddEventDialog()
 }
 
 void AddEventDialog::on_buttonBox_accepted(){
-    qInfo("Completed event!");
 
     bool isElevatorSpecific;
     if (!(ui->elevator_id->text()).isEmpty()){

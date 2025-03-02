@@ -17,7 +17,6 @@ AddBehaviourDialog::~AddBehaviourDialog()
 }
 
 void AddBehaviourDialog::on_buttonBox_accepted(){
-    qDebug() << "Accepted...";
     std::string button;
     bool isFloor;
 

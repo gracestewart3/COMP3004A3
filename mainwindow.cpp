@@ -7,6 +7,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->main_stack->setCurrentIndex(1);
+    ui->passengers_added_label->hide();
+    ui->events_added_label->hide();
+    ui->pause_btn->hide();
+    ui->stop_btn->hide();
+
     numPassengers = 0;
     passengers = new Passenger*[MAX_ARR];
     numEvents = 0;
@@ -41,9 +47,12 @@ void MainWindow::handleNewPassenger(int floor, int time, Behaviour** behaviours,
     passengers[numPassengers] = newPassenger;
     numPassengers++;
 
+    ui->passengers_added_label->show();
+
     QString message;
     message = QString::asprintf("Passenger %d:\nStarting on floor %d at time %d, going %s.\n", newPassenger->id, floor, time, direction.c_str());
     ui->passenger_display->setText(ui->passenger_display->text() + "\n" + message);
+
 }
 void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific, int id){
     SafetyEvent* newEvent = new SafetyEvent(event, time, isElevatorSpecific, id);
@@ -59,6 +68,8 @@ void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific,
         event_str = "";
     }
 
+     ui->events_added_label->show();
+
     QString message;
     message = QString::asprintf("%s event %sat timestep %d.\n", event.c_str(), event_str.c_str(), time);
     ui->event_display->setText(ui->event_display->text() + "\n" + message);
@@ -66,6 +77,23 @@ void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific,
 
 void MainWindow::on_start_btn_clicked(){
     SimulationController* controller = new SimulationController(events, numEvents, passengers, numPassengers, ui->num_elevators->text().toInt(), ui->num_floors->text().toInt());
-    qDebug() << "Created controller!";
-    //this->close(); //Should I open a new window? Replace the contents of this one? Leave this one open too?
+    ui->main_stack->setCurrentIndex(0);
+    ui->pause_btn->show();
+    ui->stop_btn->show();
+    for(int i=ui->num_elevators->text().toInt()+1; i>0;i--){
+        addElevator();
+    }
+
+}
+
+void MainWindow::addElevator(){
+
+    QHBoxLayout* layout = qobject_cast<QHBoxLayout*>(ui->elevator_frame->layout());
+
+    QString elevatorText = tr("Elevator #%1").arg(layout->count());
+
+    QPushButton* button = new QPushButton(elevatorText, ui->elevator_frame);
+
+    layout->insertWidget(0, button);
+
 }
