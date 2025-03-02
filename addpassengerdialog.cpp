@@ -29,8 +29,7 @@ void AddPassengerDialog::on_add_behaviour_clicked()
 }
 
 void AddPassengerDialog::on_buttonBox_accepted(){
-    qInfo("Completed passenger!");
-    emit completePassenger(ui->startingFloor->text().toInt(),ui->timestep->text().toInt(), behaviours, ui->direction->currentText().toStdString());
+    emit completePassenger(ui->startingFloor->text().toInt(),ui->timestep->text().toInt(), behaviours, numBehaviours, ui->direction->currentText().toStdString());
     this->close();
 }
 

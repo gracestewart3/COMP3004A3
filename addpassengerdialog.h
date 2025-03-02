@@ -33,7 +33,7 @@ public slots:
     void handleNewBehaviour(const char*, int, bool);
 
 signals:
-    void completePassenger(int, int, Behaviour**, string);
+    void completePassenger(int, int, Behaviour**, int, string);
 };
 
 #endif // ADDPASSENGERDIALOG_H

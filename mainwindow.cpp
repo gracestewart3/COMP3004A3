@@ -7,6 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    numPassengers = 0;
+    passengers = new Passenger*[MAX_ARR];
+    numEvents = 0;
+    events = new SafetyEvent*[MAX_ARR];
 }
 
 MainWindow::~MainWindow()
@@ -31,10 +35,11 @@ void MainWindow::on_add_passenger_clicked()
 
 }
 
-void MainWindow::handleNewPassenger(int floor, int time, Behaviour** behaviours, string direction){
-    Passenger* newPassenger = new Passenger(floor, time, behaviours,  direction);
+void MainWindow::handleNewPassenger(int floor, int time, Behaviour** behaviours, int  numActions, string direction){
+    Passenger* newPassenger = new Passenger(floor, time, behaviours, numActions, direction);
 
-    //eventually add to some sort of list of passengers.....
+    passengers[numPassengers] = newPassenger;
+    numPassengers++;
 
     QString message;
     message = QString::asprintf("Passenger %d:\nStarting on floor %d at time %d, going %s.\n", newPassenger->id, floor, time, direction.c_str());
@@ -43,7 +48,9 @@ void MainWindow::handleNewPassenger(int floor, int time, Behaviour** behaviours,
 void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific, int id){
     SafetyEvent* newEvent = new SafetyEvent(event, time, isElevatorSpecific, id);
 
-    //eventually add to some sort of list of events.....
+    events[numEvents] = newEvent;
+    numEvents++;
+
     string event_str;
     if (isElevatorSpecific){
         event_str = "on elevator " + to_string(id) + ", ";
@@ -55,4 +62,10 @@ void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific,
     QString message;
     message = QString::asprintf("%s event %sat timestep %d.\n", event.c_str(), event_str.c_str(), time);
     ui->event_display->setText(ui->event_display->text() + "\n" + message);
+}
+
+void MainWindow::on_start_btn_clicked(){
+    SimulationController* controller = new SimulationController(events, numEvents, passengers, numPassengers, ui->num_elevators->text().toInt(), ui->num_floors->text().toInt());
+    qDebug() << "Created controller!";
+    //this->close(); //Should I open a new window? Replace the contents of this one? Leave this one open too?
 }

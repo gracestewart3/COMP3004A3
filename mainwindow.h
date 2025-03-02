@@ -6,7 +6,8 @@
 #include "addpassengerdialog.h"
 #include "passenger.h"
 #include "safetyevent.h"
-
+#include "simulationcontroller.h"
+#include <QDebug>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -22,14 +23,20 @@ public:
 private slots:
     void on_add_event_clicked();
     void on_add_passenger_clicked();
+    void on_start_btn_clicked();
 
 private:
     Ui::MainWindow *ui;
     AddEventDialog *eventWindow;
     AddPassengerDialog *passengerWindow;
+    Passenger** passengers;
+    int numPassengers;
+    SafetyEvent** events;
+    int numEvents;
 
 public slots:
-    void handleNewPassenger(int, int, Behaviour**, string);
+    void handleNewPassenger(int, int, Behaviour**, int, string);
     void handleNewEvent(string, int, bool, int);
+
 };
 #endif // MAINWINDOW_H

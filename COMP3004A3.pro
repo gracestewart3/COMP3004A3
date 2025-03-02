@@ -12,20 +12,34 @@ SOURCES += \
     addbehaviourdialog.cpp \
     addeventdialog.cpp \
     addpassengerdialog.cpp \
+    announcementsystem.cpp \
     behaviour.cpp \
+    bell.cpp \
+    door.cpp \
+    elevator.cpp \
+    floor.cpp \
+    floorsensor.cpp \
     main.cpp \
     mainwindow.cpp \
     passenger.cpp \
-    safetyevent.cpp
+    safetyevent.cpp \
+    simulationcontroller.cpp
 
 HEADERS += \
     addbehaviourdialog.h \
     addeventdialog.h \
     addpassengerdialog.h \
+    announcementsystem.h \
     behaviour.h \
+    bell.h \
+    door.h \
+    elevator.h \
+    floor.h \
+    floorsensor.h \
     mainwindow.h \
     passenger.h \
-    safetyevent.h
+    safetyevent.h \
+    simulationcontroller.h
 
 FORMS += \
     addbehaviourdialog.ui \
