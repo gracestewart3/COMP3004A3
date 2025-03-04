@@ -80,9 +80,10 @@ void MainWindow::on_start_btn_clicked(){
     ui->main_stack->setCurrentIndex(0);
     ui->pause_btn->show();
     ui->stop_btn->show();
-    for(int i=ui->num_elevators->text().toInt()+1; i>0;i--){
+    for(int i=ui->num_elevators->text().toInt(); i>0;i--){
         addElevator();
     }
+    controller->runSimulation();
 
 }
 
