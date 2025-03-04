@@ -9,6 +9,7 @@
 #include "simulationcontroller.h"
 #include <QDebug>
 #include <QString>
+#include <QtConcurrent/QtConcurrent>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -38,6 +39,7 @@ private:
 
 public slots:
     void handleNewPassenger(int, int, int, Behaviour**, int, string);
+    void handleNewTimestep(int);
     void handleNewEvent(string, int, bool, int);
 
 };

@@ -20,6 +20,7 @@ class Passenger : public QObject {
         bool isInElevator;
         Elevator* inElevator;
         void boardElevator(Elevator *);
+        void pushDestinationButton();
 
 };
 

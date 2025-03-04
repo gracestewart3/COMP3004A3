@@ -12,12 +12,13 @@ using namespace std;
 
 class Elevator{
 public:
-    Elevator(int, int=1, string="idle", string="none");
+    Elevator(int, int=1, string="idle", string="none", string="none");
     ~Elevator();
     int id;
     int currFloor;
     string currState;
     string direction;
+    string goalDirection;
     Door* door;
     FloorSensor* floorSensor;
     AnnouncementSystem* announcementSystem;

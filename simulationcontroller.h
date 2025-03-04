@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QtDebug>
 #include <cmath>
+#include <unistd.h>
 #define MAX_ARR       24
 
 class SimulationController : public QObject {
@@ -34,11 +35,11 @@ class SimulationController : public QObject {
         Floor** floors;
         void removePassengerFromActive(int);
         void removeEventFromFuture(int);
-        int selectElevator(int);
-        void informElevatorOfRequest(int, int);
-        void informElevatorOfFloorRequest(int, int, string);
+        int selectElevator(int, string);
+        void informElevatorOfRequest(int, int, string);
         void onboardElevator(Elevator*);
-
+signals:
+    void updateTimestep(int);
 };
 
 #endif // SIMULATIONCONTROLLER_H

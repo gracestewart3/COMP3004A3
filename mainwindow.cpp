@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pause_btn->hide();
     ui->stop_btn->hide();
 
+
     numPassengers = 0;
     passengers = new Passenger*[MAX_ARR];
     numEvents = 0;
@@ -75,15 +76,20 @@ void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific,
     ui->event_display->setText(ui->event_display->text() + "\n" + message);
 }
 
-void MainWindow::on_start_btn_clicked(){
+void MainWindow::on_start_btn_clicked(){//eventually seperate the behaviour for initial start and resume
     SimulationController* controller = new SimulationController(events, numEvents, passengers, numPassengers, ui->num_elevators->text().toInt(), ui->num_floors->text().toInt());
+    QObject::connect(controller, &SimulationController::updateTimestep, this, &MainWindow::handleNewTimestep);
     ui->main_stack->setCurrentIndex(0);
     ui->pause_btn->show();
     ui->stop_btn->show();
     for(int i=ui->num_elevators->text().toInt(); i>0;i--){
         addElevator();
     }
-    controller->runSimulation();
+
+    QtConcurrent::run([controller]() {//run concurrently so that it can send signals
+        controller->runSimulation();
+    });
+
 
 }
 
@@ -97,4 +103,8 @@ void MainWindow::addElevator(){
 
     layout->insertWidget(0, button);
 
+}
+
+void MainWindow::handleNewTimestep(int time){
+    ui->timestep->display(time);
 }

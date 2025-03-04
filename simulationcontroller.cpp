@@ -113,23 +113,25 @@ void SimulationController::removeEventFromFuture(int index){
 
 }
 
-int SimulationController::selectElevator(int flr){//now I'm thinking this should take a direction too? Like the "goal"' direction?
+int SimulationController::selectElevator(int flr, string goalDir){
     int best = 0;
     for(int i = 0; i < numElevators; i++){
         int oldDistance = abs(elevators[best]->currFloor - flr);
         int newDistance = abs(elevators[i]->currFloor - flr);
 
-        bool newRightDirection = (elevators[i]->currFloor >= flr && elevators[i]->direction=="down") || (elevators[i]->currFloor <= flr and elevators[i]->direction=="up");
+        //bool newRightDirection = (elevators[i]->currFloor >= flr && elevators[i]->direction=="down") || (elevators[i]->currFloor <= flr and elevators[i]->direction=="up");
+        bool newRightDirection = (elevators[i]->goalDirection == goalDir);
 
-        if(((newDistance <= oldDistance) && newRightDirection) || ((newDistance <= oldDistance) && elevators[i]->direction=="none")){
+        if(((newDistance <= oldDistance) && newRightDirection) || ((newDistance <= oldDistance) && elevators[i]->goalDirection=="none")){
             best = i;
         }
     }
     return best;
 }
 
-void SimulationController::informElevatorOfRequest(int el, int flr){
+void SimulationController::informElevatorOfRequest(int el, int flr, string goalDir){
     elevators[el]->enqueueRequest(flr);
+    elevators[el]->goalDirection = goalDir; //this seems like it could be problematic
 }
 
 
@@ -144,8 +146,8 @@ void SimulationController::runSimulation(){
             if (passengers[i]->floorRequestTimeStep == timestep){
                 //note: right now I am bypassing floors all together. Mention this in assignment
                 int startingFloor = passengers[i]->startingFloor;
-                int assignedElevator = selectElevator(startingFloor);
-                informElevatorOfRequest(assignedElevator, startingFloor);
+                int assignedElevator = selectElevator(startingFloor, passengers[i]->direction);
+                informElevatorOfRequest(assignedElevator, startingFloor, passengers[i]->direction);
                 qDebug() << "Deal with inital floor request for passenger " << passengers[i]->id << "...";
 
             }
@@ -198,9 +200,6 @@ void SimulationController::runSimulation(){
             int floor = elevators[i]->currFloor;
             if(!elevators[i]->requests.empty()){ //if there are requests...
                 if(elevators[i]->requests.find(floor) != elevators[i]->requests.end()){//if the elevator is supposed to stop here...
-
-                    //need to differentiate between current direction and goal direction...
-
                    qDebug() << "Elevator" << elevators[i]->id << "stopped at floor" << floor << "\n\t Ring bell\n\t Open doors for 10 seconds\n\t Ring bell\n\t Close doors";
                    //add something useful here.........
 
@@ -238,22 +237,28 @@ void SimulationController::runSimulation(){
                     elevators[i]->currFloor--;//move elevator down one floor..........
                 }
             }
+            else{
+                //if no more requestss, stop moving. (not sure about this)
+                elevators[i]->goalDirection="none";
+                elevators[i]->direction="none";
+            }
         }
-
+        sleep(1);
         timestep++;
+        emit updateTimestep(timestep);
     }
-    //loop through passengers -> loop through behvaiours-> any behaviours at this timestep? any initial button presses at this timestep?
-    //loop through safety events -> any events at this timestep?
-    //loop through elevators -> should I stop at this floor? open doors? etc? should I start moving?
 }
 
 void SimulationController::onboardElevator(Elevator* elevator){
     for(int k = 0; k < numActivePassengers; k++){
         int i = activePassengers[k];
-        qDebug() << "Passenger" << passengers[i]->id << ": isInElevator" << passengers[i]->isInElevator << ", starting floor" << passengers[i]->startingFloor << ", elevator's floor" << elevator->currFloor << ", elevator's direction" << elevator->direction.c_str();
-        if(!passengers[i]->isInElevator && passengers[i]->startingFloor==elevator->currFloor && passengers[i]->direction==elevator->direction){
+        if(!passengers[i]->isInElevator && passengers[i]->startingFloor==elevator->currFloor && passengers[i]->direction==elevator->goalDirection){
             passengers[i]->boardElevator(elevator);
             qDebug() << "Passenger" << passengers[i]->id << "getting onto" << elevator->id;
+            passengers[i]->boardElevator(elevator);
+            qDebug() << "Passenger" << passengers[i]->id << "requesting floor" << passengers[i]->destination;
+            passengers[i]->pushDestinationButton();
         }
     }
+    elevator->direction = elevator->goalDirection;
 }

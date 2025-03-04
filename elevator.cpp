@@ -1,10 +1,11 @@
 #include "elevator.h"
 
-Elevator::Elevator(int elevatorId, int floor, string state, string dir){
+Elevator::Elevator(int elevatorId, int floor, string state, string dir, string goalDir){
     id = elevatorId;
     currFloor = floor;
     currState =  state;
     direction = dir;
+    goalDirection = goalDir;
     Door* door = new Door;
     FloorSensor* floorSensor = new FloorSensor;
     AnnouncementSystem* announcementSystem = new AnnouncementSystem;
