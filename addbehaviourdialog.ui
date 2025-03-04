@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>262</width>
     <height>300</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>240</y>
-     <width>341</width>
+     <y>230</y>
+     <width>161</width>
      <height>32</height>
     </rect>
    </property>
@@ -38,11 +38,6 @@
      <height>25</height>
     </rect>
    </property>
-   <item>
-    <property name="text">
-     <string>Destination Button</string>
-    </property>
-   </item>
    <item>
     <property name="text">
      <string>Open Door</string>
@@ -93,29 +88,6 @@
    </property>
    <property name="text">
     <string>Timestep of Button Press:</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="floor">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>40</y>
-     <width>113</width>
-     <height>25</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="floor_label">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>20</y>
-     <width>111</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Floor:</string>
    </property>
   </widget>
  </widget>

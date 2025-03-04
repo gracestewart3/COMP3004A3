@@ -113,7 +113,7 @@ void SimulationController::removeEventFromFuture(int index){
 
 }
 
-int SimulationController::selectElevator(int flr){
+int SimulationController::selectElevator(int flr){//now I'm thinking this should take a direction too? Like the "goal"' direction?
     int best = 0;
     for(int i = 0; i < numElevators; i++){
         int oldDistance = abs(elevators[best]->currFloor - flr);
@@ -132,7 +132,9 @@ void SimulationController::informElevatorOfRequest(int el, int flr){
     elevators[el]->enqueueRequest(flr);
 }
 
+
 void SimulationController::runSimulation(){
+    //notes: Should probably split into smaller functions. Still need to add support for car request, and how to keep track of what passengers are where
     int timestep = 0;
     while (timestep  <= 10){ //change to stop  when all events are dealt  with
         qDebug() << timestep;
@@ -144,10 +146,10 @@ void SimulationController::runSimulation(){
                 int startingFloor = passengers[i]->startingFloor;
                 int assignedElevator = selectElevator(startingFloor);
                 informElevatorOfRequest(assignedElevator, startingFloor);
-                qDebug() << "deal with inital floor request for passenger " << passengers[i]->id << "...";
+                qDebug() << "Deal with inital floor request for passenger " << passengers[i]->id << "...";
 
             }
-            else if (passengers[i]->floorRequestTimeStep > timestep){
+            if (passengers[i]->floorRequestTimeStep > timestep || !passengers[i]->isInElevator){
                 pIsActive = true;
             }
             for(int j = 0; j < passengers[i]->numBehaviours; j++){
@@ -165,10 +167,6 @@ void SimulationController::runSimulation(){
                     else if(btn == "Open Door"){
                          qDebug() << "Passenger" << passengers[i]->id << "pressed the open door button";
                          //eventually do something useful here........................................
-                    }
-                    else{
-                        qDebug() << "Passenger" << passengers[i]->id << "pressed destination button" << btn.c_str();
-                        //figure out which elevator they are inside....should passengers be in charge of knowing this? the controller?
                     }
 
                 }
@@ -200,10 +198,15 @@ void SimulationController::runSimulation(){
             int floor = elevators[i]->currFloor;
             if(!elevators[i]->requests.empty()){ //if there are requests...
                 if(elevators[i]->requests.find(floor) != elevators[i]->requests.end()){//if the elevator is supposed to stop here...
+
+                    //need to differentiate between current direction and goal direction...
+
                    qDebug() << "Elevator" << elevators[i]->id << "stopped at floor" << floor << "\n\t Ring bell\n\t Open doors for 10 seconds\n\t Ring bell\n\t Close doors";
                    //add something useful here.........
+
                    elevators[i]->currState = "idle";
                    elevators[i]->serviceRequest(floor);
+                   onboardElevator(elevators[i]);
                 }
                 else if(elevators[i]->direction == "none"){
                     int nextRequest = elevators[i]->closestRequest();
@@ -242,4 +245,15 @@ void SimulationController::runSimulation(){
     //loop through passengers -> loop through behvaiours-> any behaviours at this timestep? any initial button presses at this timestep?
     //loop through safety events -> any events at this timestep?
     //loop through elevators -> should I stop at this floor? open doors? etc? should I start moving?
+}
+
+void SimulationController::onboardElevator(Elevator* elevator){
+    for(int k = 0; k < numActivePassengers; k++){
+        int i = activePassengers[k];
+        qDebug() << "Passenger" << passengers[i]->id << ": isInElevator" << passengers[i]->isInElevator << ", starting floor" << passengers[i]->startingFloor << ", elevator's floor" << elevator->currFloor << ", elevator's direction" << elevator->direction.c_str();
+        if(!passengers[i]->isInElevator && passengers[i]->startingFloor==elevator->currFloor && passengers[i]->direction==elevator->direction){
+            passengers[i]->boardElevator(elevator);
+            qDebug() << "Passenger" << passengers[i]->id << "getting onto" << elevator->id;
+        }
+    }
 }

@@ -2,10 +2,11 @@
 
 int Passenger::nextId = 0;
 
-Passenger::Passenger(int floor, int time, Behaviour** actions, int numActions, string dir, int i, bool isInside, int elevator){
+Passenger::Passenger(int floor, int time, int dest, Behaviour** actions, int numActions, string dir, int i, bool isInside, Elevator* elevator){
     startingFloor = floor;
     floorRequestTimeStep = time;
     behaviours = actions;
+    destination = dest;
     direction = dir;
     id = i;
     nextId++;
@@ -19,4 +20,9 @@ Passenger::~Passenger(){
         delete behaviours[i];
     }
     delete [] behaviours;
+}
+
+void Passenger::boardElevator(Elevator* elevator){
+    isInElevator = true;
+    inElevator = elevator;
 }

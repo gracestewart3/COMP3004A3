@@ -30,10 +30,10 @@ private slots:
     void on_buttonBox_accepted();
 
 public slots:
-    void handleNewBehaviour(const char*, int, bool);
+    void handleNewBehaviour(const char*, int);
 
 signals:
-    void completePassenger(int, int, Behaviour**, int, string);
+    void completePassenger(int, int, int, Behaviour**, int, string);
 };
 
 #endif // ADDPASSENGERDIALOG_H

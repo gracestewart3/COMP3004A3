@@ -37,7 +37,7 @@ private:
     void addElevator();
 
 public slots:
-    void handleNewPassenger(int, int, Behaviour**, int, string);
+    void handleNewPassenger(int, int, int, Behaviour**, int, string);
     void handleNewEvent(string, int, bool, int);
 
 };

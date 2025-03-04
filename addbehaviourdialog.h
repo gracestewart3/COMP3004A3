@@ -21,10 +21,9 @@ private:
 
 private slots:
     void on_buttonBox_accepted();
-    void onComboBoxTextChanged(const QString);
 
 signals:
-    void updatePassenger(const char*, int, bool);
+    void updatePassenger(const char*, int);
 };
 
 #endif // ADDBEHAVIOURDIALOG_H

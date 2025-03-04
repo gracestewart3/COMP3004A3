@@ -29,25 +29,18 @@ void AddPassengerDialog::on_add_behaviour_clicked()
 }
 
 void AddPassengerDialog::on_buttonBox_accepted(){
-    emit completePassenger(ui->startingFloor->text().toInt(),ui->timestep->text().toInt(), behaviours, numBehaviours, ui->direction->currentText().toStdString());
+    emit completePassenger(ui->startingFloor->text().toInt(),ui->timestep->text().toInt(), ui->destination->text().toInt(), behaviours, numBehaviours, ui->direction->currentText().toStdString());
     this->close();
 }
 
 
-void AddPassengerDialog::handleNewBehaviour(const char* button_pressed, int timestep, bool isFloor) {
-    const char* button_prefix;
-    if (isFloor){
-        button_prefix = "Floor ";
-    }
-    else{
-        button_prefix = "";
-    }
+void AddPassengerDialog::handleNewBehaviour(const char* button_pressed, int timestep) {
 
     Behaviour* behaviour = new Behaviour(timestep, button_pressed);
     behaviours[numBehaviours] = behaviour;
     numBehaviours++;
 
     QString message;
-    message = QString::asprintf("Button: %s%s, Timestep: %d", button_prefix, button_pressed, timestep);
+    message = QString::asprintf("Button: %s, Timestep: %d", button_pressed, timestep);
     ui->behaviour_display->setText(ui->behaviour_display->text() + "\n" + message);
 }

@@ -41,8 +41,8 @@ void MainWindow::on_add_passenger_clicked()
 
 }
 
-void MainWindow::handleNewPassenger(int floor, int time, Behaviour** behaviours, int  numActions, string direction){
-    Passenger* newPassenger = new Passenger(floor, time, behaviours, numActions, direction);
+void MainWindow::handleNewPassenger(int floor, int time, int dest, Behaviour** behaviours, int  numActions, string direction){
+    Passenger* newPassenger = new Passenger(floor, time, dest, behaviours, numActions, direction);
 
     passengers[numPassengers] = newPassenger;
     numPassengers++;
@@ -50,7 +50,7 @@ void MainWindow::handleNewPassenger(int floor, int time, Behaviour** behaviours,
     ui->passengers_added_label->show();
 
     QString message;
-    message = QString::asprintf("Passenger %d:\nStarting on floor %d at time %d, going %s.\n", newPassenger->id, floor, time, direction.c_str());
+    message = QString::asprintf("Passenger %d:\nStarting on floor %d at time %d, going %s to floor %d.\n", newPassenger->id, floor, time, direction.c_str(), dest);
     ui->passenger_display->setText(ui->passenger_display->text() + "\n" + message);
 
 }

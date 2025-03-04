@@ -11,8 +11,6 @@ class Floor:public QObject{
         Floor(int);
     private:
         int floorNumber;
-    //public slots:
-        //void handlePress(int, string); //don't know how to match up specific passenger with specific floor...Maybe use straight up public methods instead of this nonesense...
 };
 
 #endif // FLOOR_H
