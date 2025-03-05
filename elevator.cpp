@@ -8,10 +8,10 @@ Elevator::Elevator(int elevatorId, int floor, string state, string dir, string g
     goalDirection = goalDir;
     recalled=recall;
     recalledFloor=recFlr;
-    Door* door = new Door;
-    FloorSensor* floorSensor = new FloorSensor;
-    AnnouncementSystem* announcementSystem = new AnnouncementSystem;
-    Bell* bell = new Bell;
+    door = new Door();
+    floorSensor = new FloorSensor;
+    announcementSystem = new AnnouncementSystem;
+    bell = new Bell;
 }
 
 Elevator::~Elevator(){

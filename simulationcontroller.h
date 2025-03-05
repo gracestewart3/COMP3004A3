@@ -41,10 +41,17 @@ class SimulationController : public QObject {
         void onboardElevator(Elevator*, string*);
         void unloadElevator(Elevator*, string*);
         void respondToBuildingFireAlarm(string *);
+        void respondToElevatorFireAlarm(string *, int);
+        void respondToDoorObstruction(string *, int);
+        void respondToHelpSignal(string *, int, int);
+        void respondToDoorOpen(string *, int, int);
+        void respondToDoorClose(string *, int, int);
+        void respondToOverload(string *, int);
         void respondToPowerOutage(string *);
 signals:
     void updateTimestep(int);
     void updateLog(QString);
+    void updateSafetyEvents(QString);
 };
 
 #endif // SIMULATIONCONTROLLER_H
