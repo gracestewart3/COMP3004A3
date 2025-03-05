@@ -40,6 +40,8 @@ class SimulationController : public QObject {
         void informElevatorOfRequest(int, int, string);
         void onboardElevator(Elevator*, string*);
         void unloadElevator(Elevator*, string*);
+        void respondToBuildingFireAlarm(string *);
+        void respondToPowerOutage(string *);
 signals:
     void updateTimestep(int);
     void updateLog(QString);

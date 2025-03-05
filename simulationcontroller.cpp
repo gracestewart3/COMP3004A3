@@ -139,6 +139,8 @@ void SimulationController::runSimulation(){
 
     //notes: Should probably split into smaller functions?
     int timestep = 0;
+    string* currSafetyEvents[MAX_ARR];
+    int numCurrSafetyEvents = 0;
     while (true){ //change to stop  when all events are dealt  with
         string log = "\nTimestep " + to_string(timestep) + ":";
         qDebug() << timestep;
@@ -224,8 +226,6 @@ void SimulationController::runSimulation(){
                 if (passengers[i]->behaviours[j]->getTimestep() == timestep && passengers[i]->isInElevator){
                     string btn = passengers[i]->behaviours[j]->getButton();
 
-                    //why is it crashing on a help event??
-
                     if(btn == "help"){
                          qDebug() << "Passenger" << passengers[i]->id << "pressed the help button";
                          //eventually do something useful here........................................
@@ -255,17 +255,21 @@ void SimulationController::runSimulation(){
         }
         for(int i = 0; i < numFutureEvents; i++){
             if (events[i]->timestep == timestep){
-                string event_str;
-                if (events[i]->isElevatorSpecific){
-                    event_str = " e" + to_string(events[i]->id);
+                if(events[i]->type=="Fire Alarm (from building)"){
+                    string subLog="";
+                    respondToBuildingFireAlarm(&subLog);
+                    log +=subLog;
                 }
-                else{
-                    event_str = "";
+                else if(events[i]->type=="Power Outage"){
+                    string subLog="";
+                    respondToPowerOutage(&subLog);
+                    log +=subLog;
                 }
-                qDebug() << "Deal with" << events[i]->type.c_str() << event_str.c_str();
-                log += "\n\tSafety Event: " + events[i]->type + event_str;
-                //eventually, have a function that deals with this and takes it off of future........................
             }
+            //overload (froom e)
+            //fire  alarm (from e)
+            //door obstruction (from e)
+            //add rest of safety events here......also update display....
         }
 
 
@@ -312,11 +316,41 @@ void SimulationController::onboardElevator(Elevator* elevator, string* log){
 }
 
 void SimulationController::unloadElevator(Elevator* elevator, string* log){
+    if(elevator->recalled  && elevator->recalledFloor == elevator->currFloor){
+        *log += "\n\tElevator Event: e" + to_string(elevator->id) + " asks passengers to disembark via auido/visual displays.";
+    }
     for(int i = 0; i < numPassengers; i++){
-        if(passengers[i]->isInElevator && passengers[i]->inElevator==elevator && passengers[i]->destination==elevator->currFloor){
+        if((passengers[i]->isInElevator && passengers[i]->inElevator==elevator && passengers[i]->destination==elevator->currFloor) || (passengers[i]->isInElevator && passengers[i]->inElevator==elevator  && elevator->recalled  && elevator->recalledFloor == elevator->currFloor)){
             *log += "\n\tPassenger Event: p" + to_string(passengers[i]->id) + " disembarks e" + to_string(elevator->id) + " on f" + to_string(elevator->currFloor);
             passengers[i]->disembarkElevator();
         }
     }
 }
+
+void  SimulationController::respondToBuildingFireAlarm(string*  log){
+    *log += "\n\tSafety Event: Building fire alarm. Recalling all elevators to f1.";
+    for(int i = 0; i < numElevators; i++){
+        elevators[i]->recallToFloor(1);
+    }
+    //say that all passengers are inactive and all events are passed (bit of a cheat, reconsider later))
+    numActivePassengers=0;
+    delete [] activePassengers;
+
+    numFutureEvents=0;
+    delete [] futureEvents;
+}
+
+void  SimulationController::respondToPowerOutage(string*  log){
+    *log += "\n\tSafety Event: Building power outage. Recalling all elevators to f1 on emergency power.";
+    for(int i = 0; i < numElevators; i++){
+        elevators[i]->recallToFloor(1);
+    }
+    //say that all passengers are inactive and all events are passed (bit of a cheat, reconsider later))
+    numActivePassengers=0;
+    delete [] activePassengers;
+
+    numFutureEvents=0;
+    delete [] futureEvents;
+}
+
 

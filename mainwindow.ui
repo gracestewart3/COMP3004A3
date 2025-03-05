@@ -81,7 +81,7 @@
    <widget class="QStackedWidget" name="main_stack">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>-10</x>
       <y>0</y>
       <width>931</width>
       <height>561</height>
@@ -206,8 +206,8 @@
      <widget class="QLCDNumber" name="timestep">
       <property name="geometry">
        <rect>
-        <x>780</x>
-        <y>50</y>
+        <x>710</x>
+        <y>70</y>
         <width>131</width>
         <height>51</height>
        </rect>
@@ -230,6 +230,24 @@
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>206</red>
+            <green>223</green>
+            <blue>245</blue>
            </color>
           </brush>
          </colorrole>
@@ -262,6 +280,24 @@
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>206</red>
+            <green>223</green>
+            <blue>245</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="PlaceholderText">
           <brush brushstyle="SolidPattern">
            <color alpha="128">
@@ -291,6 +327,24 @@
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>206</red>
+            <green>223</green>
+            <blue>245</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>206</red>
+            <green>223</green>
+            <blue>245</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="PlaceholderText">
           <brush brushstyle="SolidPattern">
            <color alpha="128">
@@ -303,6 +357,12 @@
         </disabled>
        </palette>
       </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
       <property name="lineWidth">
        <number>0</number>
       </property>
@@ -313,8 +373,8 @@
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>780</x>
-        <y>30</y>
+        <x>710</x>
+        <y>50</y>
         <width>121</width>
         <height>17</height>
        </rect>
@@ -333,7 +393,7 @@
        <rect>
         <x>19</x>
         <y>69</y>
-        <width>741</width>
+        <width>641</width>
         <height>121</height>
        </rect>
       </property>
@@ -364,7 +424,7 @@
        <rect>
         <x>20</x>
         <y>240</y>
-        <width>741</width>
+        <width>901</width>
         <height>311</height>
        </rect>
       </property>
@@ -483,6 +543,69 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="text">
        <string>Log Console:</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="active_safety_events">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>150</y>
+        <width>201</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>153</red>
+            <green>193</green>
+            <blue>241</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>153</red>
+            <green>193</green>
+            <blue>241</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>206</red>
+            <green>223</green>
+            <blue>245</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>130</y>
+        <width>171</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Active Safety Events:</string>
       </property>
      </widget>
     </widget>
