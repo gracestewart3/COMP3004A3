@@ -40,17 +40,17 @@
    </property>
    <item>
     <property name="text">
-     <string>Open Door</string>
+     <string>open door</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Close Door</string>
+     <string>close door</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Help</string>
+     <string>help</string>
     </property>
    </item>
   </widget>

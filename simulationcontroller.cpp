@@ -136,9 +136,11 @@ void SimulationController::informElevatorOfRequest(int el, int flr, string goalD
 
 
 void SimulationController::runSimulation(){
+
     //notes: Should probably split into smaller functions. Still need to add support for car request, and how to keep track of what passengers are where
     int timestep = 0;
     while (timestep  <= 10){ //change to stop  when all events are dealt  with
+        string log = "Timestep " + to_string(timestep) + ":";
         qDebug() << timestep;
         for(int k = 0; k < numActivePassengers; k++){
             int i = activePassengers[k];
@@ -148,7 +150,9 @@ void SimulationController::runSimulation(){
                 int startingFloor = passengers[i]->startingFloor;
                 int assignedElevator = selectElevator(startingFloor, passengers[i]->direction);
                 informElevatorOfRequest(assignedElevator, startingFloor, passengers[i]->direction);
-                qDebug() << "Deal with inital floor request for passenger " << passengers[i]->id << "...";
+                qDebug() << "Passenger" << passengers[i]->id << "selects" << passengers[i]->direction.c_str() << "on floor" << startingFloor << ".";
+
+                log += "\n\tFloor Request: p" + to_string(passengers[i]->id)  +  " f" + to_string(startingFloor) + " " + passengers[i]->direction;
 
             }
             if (passengers[i]->floorRequestTimeStep > timestep || !passengers[i]->isInElevator){
@@ -156,20 +160,26 @@ void SimulationController::runSimulation(){
             }
             for(int j = 0; j < passengers[i]->numBehaviours; j++){
 
-                if (passengers[i]->behaviours[j]->getTimestep() == timestep){
+                if (passengers[i]->behaviours[j]->getTimestep() == timestep && passengers[i]->isInElevator){
                     string btn = passengers[i]->behaviours[j]->getButton();
-                    if(btn == "Help"){
+
+                    //why is it crashing on a help event??
+
+                    if(btn == "help"){
                          qDebug() << "Passenger" << passengers[i]->id << "pressed the help button";
                          //eventually do something useful here........................................
+
                     }
-                    else if(btn == "Close Door"){
+                    else if(btn == "close door"){
                          qDebug() << "Passenger" << passengers[i]->id << "pressed the close door button";
                          //eventually do something useful here........................................
                     }
-                    else if(btn == "Open Door"){
+                    else if(btn == "open door"){
                          qDebug() << "Passenger" << passengers[i]->id << "pressed the open door button";
                          //eventually do something useful here........................................
                     }
+
+                    log += "\n\tPassenger Event: p" + to_string(passengers[i]->id) + " e" + to_string(passengers[i]->inElevator->id)+ " " + btn;
 
                 }
                 else if (passengers[i]->behaviours[j]->getTimestep() > timestep){
@@ -178,6 +188,7 @@ void SimulationController::runSimulation(){
 
             }
             if (!pIsActive){
+
                 removePassengerFromActive(i);
             }
         }
@@ -185,12 +196,13 @@ void SimulationController::runSimulation(){
             if (events[i]->timestep == timestep){
                 string event_str;
                 if (events[i]->isElevatorSpecific){
-                    event_str = "on elevator " + to_string(events[i]->id);
+                    event_str = " e" + to_string(events[i]->id);
                 }
                 else{
                     event_str = "";
                 }
                 qDebug() << "Deal with" << events[i]->type.c_str() << event_str.c_str();
+                log += "\n\tSafety Event: " + events[i]->type + event_str;
                 //eventually, have a function that deals with this and takes it off of future........................
             }
         }
@@ -200,12 +212,14 @@ void SimulationController::runSimulation(){
             int floor = elevators[i]->currFloor;
             if(!elevators[i]->requests.empty()){ //if there are requests...
                 if(elevators[i]->requests.find(floor) != elevators[i]->requests.end()){//if the elevator is supposed to stop here...
-                   qDebug() << "Elevator" << elevators[i]->id << "stopped at floor" << floor << "\n\t Ring bell\n\t Open doors for 10 seconds\n\t Ring bell\n\t Close doors";
+                   qDebug() << "Elevator" << elevators[i]->id << "stopped at floor" << floor << ":\n\t Ring bell\n\t Open doors for 10 seconds\n\t Ring bell\n\t Close doors";
+                   log += "\n\tElevator: e" + to_string(elevators[i]->id) + " arrives at f" + to_string(floor) + ", bell rings, doors open";
                    //add something useful here.........
 
                    elevators[i]->currState = "idle";
                    elevators[i]->serviceRequest(floor);
                    onboardElevator(elevators[i]);
+                   log += ", bell rings, doors close";
                 }
                 else if(elevators[i]->direction == "none"){
                     int nextRequest = elevators[i]->closestRequest();
@@ -213,12 +227,14 @@ void SimulationController::runSimulation(){
                         elevators[i]->direction = "up";
                         elevators[i]->currState = "moving";
                         qDebug() << "Elevator" << elevators[i]->id << "going up now," << floor << "->" << nextRequest;
+                        log += "\n\tElevator: e" + to_string(elevators[i]->id) + " f" + to_string(floor) + "->f" + to_string(floor + 1);
                         elevators[i]->currFloor++;//move elevator up one floor..........
                     }
                     else if(nextRequest < floor){
                         elevators[i]->direction = "down";
                         elevators[i]->currState = "moving";
                         qDebug() << "Elevator" << elevators[i]->id << "going down now," << floor << "->" << nextRequest;
+                        log += "\n\tElevator: e" + to_string(elevators[i]->id) + " f" + to_string(floor) + "->f" + to_string(floor - 1);
                         elevators[i]->currFloor--;//move elevator down one floor..........
                     }
                 }
@@ -227,6 +243,7 @@ void SimulationController::runSimulation(){
                         elevators[i]->currState = "moving";
                     }
                     qDebug() << "Elevator" << elevators[i]->id << "going up," << elevators[i]->currFloor << "->" << elevators[i]->currFloor+1;
+                    log += "\n\tElevator: e" + to_string(elevators[i]->id) + " f" + to_string(elevators[i]->currFloor) + "->f" + to_string(elevators[i]->currFloor + 1);
                     elevators[i]->currFloor++;//move elevator up one floor..........
                 }
                 else if(elevators[i]->direction == "down"){
@@ -234,6 +251,7 @@ void SimulationController::runSimulation(){
                         elevators[i]->currState = "moving";
                     }
                     qDebug() << "Elevator" << elevators[i]->id << "going down," << elevators[i]->currFloor << "->" << elevators[i]->currFloor-1;
+                    log += "\n\tElevator: e" + to_string(elevators[i]->id) + " f" + to_string(elevators[i]->currFloor) + "->f" + to_string(elevators[i]->currFloor - 1);
                     elevators[i]->currFloor--;//move elevator down one floor..........
                 }
             }
@@ -243,9 +261,11 @@ void SimulationController::runSimulation(){
                 elevators[i]->direction="none";
             }
         }
+        log += "\n";
         sleep(1);
         timestep++;
         emit updateTimestep(timestep);
+        emit updateLog(QString::fromStdString(log));
     }
 }
 

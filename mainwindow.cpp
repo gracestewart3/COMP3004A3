@@ -79,6 +79,7 @@ void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific,
 void MainWindow::on_start_btn_clicked(){//eventually seperate the behaviour for initial start and resume
     SimulationController* controller = new SimulationController(events, numEvents, passengers, numPassengers, ui->num_elevators->text().toInt(), ui->num_floors->text().toInt());
     QObject::connect(controller, &SimulationController::updateTimestep, this, &MainWindow::handleNewTimestep);
+    QObject::connect(controller, &SimulationController::updateLog, this, &MainWindow::handleNewLog);
     ui->main_stack->setCurrentIndex(0);
     ui->pause_btn->show();
     ui->stop_btn->show();
@@ -107,4 +108,8 @@ void MainWindow::addElevator(){
 
 void MainWindow::handleNewTimestep(int time){
     ui->timestep->display(time);
+}
+
+void MainWindow::handleNewLog(QString txt){
+    ui->log_console->append(txt);
 }

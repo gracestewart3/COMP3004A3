@@ -40,6 +40,7 @@ private:
 public slots:
     void handleNewPassenger(int, int, int, Behaviour**, int, string);
     void handleNewTimestep(int);
+    void handleNewLog(QString);
     void handleNewEvent(string, int, bool, int);
 
 };

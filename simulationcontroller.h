@@ -6,6 +6,7 @@
 #include "elevator.h"
 #include "floor.h"
 #include <QObject>
+#include <QString>
 #include <QtDebug>
 #include <cmath>
 #include <unistd.h>
@@ -40,6 +41,7 @@ class SimulationController : public QObject {
         void onboardElevator(Elevator*);
 signals:
     void updateTimestep(int);
+    void updateLog(QString);
 };
 
 #endif // SIMULATIONCONTROLLER_H
