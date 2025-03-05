@@ -27,6 +27,11 @@ void Passenger::boardElevator(Elevator* elevator){
     inElevator = elevator;
 }
 
+void Passenger::disembarkElevator(){
+    isInElevator = false;
+    inElevator = nullptr;
+}
+
 void Passenger::pushDestinationButton(){
     if(isInElevator){
         inElevator->enqueueRequest(destination);

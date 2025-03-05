@@ -38,7 +38,8 @@ class SimulationController : public QObject {
         void removeEventFromFuture(int);
         int selectElevator(int, string);
         void informElevatorOfRequest(int, int, string);
-        void onboardElevator(Elevator*);
+        void onboardElevator(Elevator*, string*);
+        void unloadElevator(Elevator*, string*);
 signals:
     void updateTimestep(int);
     void updateLog(QString);
