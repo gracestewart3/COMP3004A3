@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: MainWindow
+ PURPOSE: To provide the user with a GUI for the  elevator simulation
+*/
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

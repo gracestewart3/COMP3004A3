@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: AddBehaviourDialog
+ PURPOSE: To provide the user with a GUI to add a passenger behaviour (eg. close doors)
+*/
 #ifndef ADDBEHAVIOURDIALOG_H
 #define ADDBEHAVIOURDIALOG_H
 

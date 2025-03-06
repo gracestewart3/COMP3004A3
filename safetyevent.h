@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: SafetyEvent
+ PURPOSE: To represent a safety event occuring at a certain timestep in the simulation (eg. fire alarm)
+*/
 #ifndef SAFETYEVENT_H
 #define SAFETYEVENT_H
 #include <string>

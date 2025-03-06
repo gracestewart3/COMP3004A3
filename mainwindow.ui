@@ -82,7 +82,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>10</y>
       <width>951</width>
       <height>561</height>
      </rect>
@@ -511,6 +511,11 @@ p, li { white-space: pre-wrap; }
         <height>17</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <underline>true</underline>
+       </font>
+      </property>
       <property name="text">
        <string>Log Console:</string>
       </property>
@@ -667,7 +672,7 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="font">
        <font>
-        <family>DejaVu Sans</family>
+        <family>DejaVu Sans Mono</family>
        </font>
       </property>
       <property name="frameShape">
@@ -682,8 +687,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="events_added_label">
       <property name="geometry">
        <rect>
-        <x>610</x>
-        <y>180</y>
+        <x>580</x>
+        <y>90</y>
         <width>141</width>
         <height>17</height>
        </rect>
@@ -697,30 +702,11 @@ p, li { white-space: pre-wrap; }
        <string>Events Added: </string>
       </property>
      </widget>
-     <widget class="QLabel" name="event_display">
-      <property name="geometry">
-       <rect>
-        <x>610</x>
-        <y>210</y>
-        <width>291</width>
-        <height>351</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
      <widget class="QLabel" name="passengers_added_label">
       <property name="geometry">
        <rect>
-        <x>300</x>
-        <y>180</y>
+        <x>260</x>
+        <y>90</y>
         <width>141</width>
         <height>17</height>
        </rect>
@@ -732,25 +718,6 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="text">
        <string>Passengers Added:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="passenger_display">
-      <property name="geometry">
-       <rect>
-        <x>300</x>
-        <y>210</y>
-        <width>301</width>
-        <height>351</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="label_3">
@@ -868,21 +835,64 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="add_passenger">
       <property name="geometry">
        <rect>
-        <x>300</x>
-        <y>120</y>
-        <width>131</width>
+        <x>40</x>
+        <y>250</y>
+        <width>141</width>
         <height>41</height>
        </rect>
       </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>98</red>
+            <green>160</green>
+            <blue>234</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>98</red>
+            <green>160</green>
+            <blue>234</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>98</red>
+            <green>160</green>
+            <blue>234</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="font">
+       <font>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>Add Passenger</string>
+       <string>+ Passenger</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="num_elevators">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>130</y>
+        <x>40</x>
+        <y>110</y>
         <width>141</width>
         <height>25</height>
        </rect>
@@ -891,11 +901,16 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="num_floors_label">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>180</y>
+        <x>40</x>
+        <y>170</y>
         <width>131</width>
         <height>17</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <underline>true</underline>
+       </font>
       </property>
       <property name="text">
        <string>Number of Floors:</string>
@@ -904,8 +919,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLineEdit" name="num_floors">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>200</y>
+        <x>40</x>
+        <y>190</y>
         <width>141</width>
         <height>25</height>
        </rect>
@@ -914,27 +929,179 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="add_event">
       <property name="geometry">
        <rect>
-        <x>610</x>
-        <y>120</y>
-        <width>131</width>
+        <x>40</x>
+        <y>330</y>
+        <width>141</width>
         <height>41</height>
        </rect>
       </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>98</red>
+            <green>160</green>
+            <blue>234</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>98</red>
+            <green>160</green>
+            <blue>234</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>98</red>
+            <green>160</green>
+            <blue>234</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
       <property name="text">
-       <string>Add Safety Event</string>
+       <string>+ Safety Event</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLabel" name="num_elevators_label">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>110</y>
+        <x>40</x>
+        <y>90</y>
         <width>141</width>
         <height>17</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <underline>true</underline>
+       </font>
+      </property>
       <property name="text">
        <string>Number of Elevators:</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="passenger_display">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>110</y>
+        <width>301</width>
+        <height>411</height>
+       </rect>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>153</red>
+            <green>193</green>
+            <blue>241</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>153</red>
+            <green>193</green>
+            <blue>241</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>206</red>
+            <green>223</green>
+            <blue>245</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans Mono</family>
+       </font>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="event_display">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>110</y>
+        <width>301</width>
+        <height>411</height>
+       </rect>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>153</red>
+            <green>193</green>
+            <blue>241</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>153</red>
+            <green>193</green>
+            <blue>241</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>206</red>
+            <green>223</green>
+            <blue>245</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans Mono</family>
+       </font>
       </property>
      </widget>
     </widget>

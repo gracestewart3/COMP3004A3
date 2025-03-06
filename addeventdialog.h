@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: AddEventDialog
+ PURPOSE: To provide the user with a GUI to add safety events (eg. fire alarm)
+*/
 #ifndef ADDEVENTDIALOG_H
 #define ADDEVENTDIALOG_H
 

@@ -5,6 +5,7 @@ SimulationController::SimulationController(SafetyEvent** evs, int numEvs, Passen
     numElevators = numEls;
     isPaused = false;
     isStopped = false;
+
     elevators = new Elevator*[numElevators];
     for(int i = 0; i < numElevators; i++){
         elevators[i] = new Elevator(i);
@@ -53,9 +54,9 @@ SimulationController::~SimulationController(){
 }
 
 void SimulationController::removePassengerFromActive(int index){
+    //remove the given index from the array of indexes belonging to "active" passengers
     int newSize = numActivePassengers-1;
     if (newSize <= 0){
-        //delete [] activePassengers;
         activePassengers = nullptr;
         numActivePassengers = 0;
         return;
@@ -69,13 +70,13 @@ void SimulationController::removePassengerFromActive(int index){
             idx++;
         }
     }
-    //delete [] activePassengers;
     activePassengers = temp;
     numActivePassengers--;
 
 }
 
 void SimulationController::removeEventFromFuture(int index){
+    //remove the given index from the array of indexes belonging to future events
     int newSize = numFutureEvents-1;
     if (newSize <= 0){
         delete [] futureEvents;
@@ -99,6 +100,7 @@ void SimulationController::removeEventFromFuture(int index){
 }
 
 int SimulationController::selectElevator(int flr, string goalDir){
+    //select which elevator to assign  to a floor request baased on direction and proximity
     int best = 0;
     for(int i = 0; i < numElevators; i++){
         int oldDistance = abs(elevators[best]->currFloor - flr);
@@ -114,15 +116,19 @@ int SimulationController::selectElevator(int flr, string goalDir){
 }
 
 void SimulationController::informElevatorOfRequest(int el, int flr, string goalDir){
+    //inform elevator of a new floor request
     elevators[el]->enqueueRequest(flr);
     elevators[el]->goalDirection = goalDir;
 }
 
 
 void SimulationController::runSimulation(){
+    //run the simulation
+
     int timestep = 0;
     string onGoingSafetyEvents[MAX_ARR];
     int numOnGoingSafetyEvents = 0;
+
     while (true){
         if(isStopped){
             emit updateLog(QString::fromStdString("\nSIMULATION STOPPED"));
@@ -133,13 +139,16 @@ void SimulationController::runSimulation(){
             sleep(1);
             continue;
         }
+
         string log = "\nTimestep " + to_string(timestep) + ":";
         string tempSafetyEvents[MAX_ARR];
         int numTempSafetyEvents = 0;
+
+        //move elevators and/or see if they should stop
         for(int i = 0; i < numElevators; i++){
             int floor = elevators[i]->currFloor;
-            if(!elevators[i]->requests.empty()){ //if there are requests...
-                if(elevators[i]->requests.find(floor) != elevators[i]->requests.end()){//if the elevator is supposed to stop here...
+            if(!elevators[i]->requests.empty()){
+                if(elevators[i]->requests.find(floor) != elevators[i]->requests.end()){
                    log += "\n\tElevator Event: e" + to_string(elevators[i]->id) + " arrives at f" + to_string(floor) + ", bell rings and doors open";
                    elevators[i]->door->openDoor();
                    elevators[i]->currState = "idle";
@@ -157,13 +166,13 @@ void SimulationController::runSimulation(){
                         elevators[i]->direction = "up";
                         elevators[i]->currState = "moving";
                         log += "\n\tElevator Event: e" + to_string(elevators[i]->id) + " f" + to_string(floor) + "->f" + to_string(floor + 1);
-                        elevators[i]->currFloor++;//move elevator up one floor..........
+                        elevators[i]->currFloor++;
                     }
                     else if(nextRequest < floor){
                         elevators[i]->direction = "down";
                         elevators[i]->currState = "moving";
                         log += "\n\tElevator Event: e" + to_string(elevators[i]->id) + " f" + to_string(floor) + "->f" + to_string(floor - 1);
-                        elevators[i]->currFloor--;//move elevator down one floor..........
+                        elevators[i]->currFloor--;
                     }
                 }
                 else if(elevators[i]->direction == "up"){
@@ -172,7 +181,7 @@ void SimulationController::runSimulation(){
                     }
 
                     log += "\n\tElevator Event: e" + to_string(elevators[i]->id) + " f" + to_string(elevators[i]->currFloor) + "->f" + to_string(elevators[i]->currFloor + 1);
-                    elevators[i]->currFloor++;//move elevator up one floor..........
+                    elevators[i]->currFloor++;
                 }
                 else if(elevators[i]->direction == "down"){
                     if(elevators[i]->currState == "idle"){
@@ -180,7 +189,7 @@ void SimulationController::runSimulation(){
                     }
 
                     log += "\n\tElevator Event: e" + to_string(elevators[i]->id) + " f" + to_string(elevators[i]->currFloor) + "->f" + to_string(elevators[i]->currFloor - 1);
-                    elevators[i]->currFloor--;//move elevator down one floor..........
+                    elevators[i]->currFloor--;
                 }
             }
             else{
@@ -191,15 +200,22 @@ void SimulationController::runSimulation(){
             }
         }
 
+        //looop through passenngers to check for floor requests or other behaviours
         for(int k = 0; k < numActivePassengers; k++){
             int i = activePassengers[k];
             bool pIsActive = false;
             if (passengers[i]->floorRequestTimeStep == timestep){
                 int startingFloor = passengers[i]->startingFloor;
-                int assignedElevator = selectElevator(startingFloor, passengers[i]->direction);
-                informElevatorOfRequest(assignedElevator, startingFloor, passengers[i]->direction);
+                if((startingFloor <= 1 && passengers[i]->direction=="down") || (startingFloor >= numFloors && passengers[i]->direction=="up") || (startingFloor <1)  || (startingFloor>numFloors)){
+                    log += "\n\tError: p" + to_string(passengers[i]->id)  +  " requested " + passengers[i]->direction + " on f" + to_string(startingFloor) + ". Disallowed by system.";
+                    removePassengerFromActive(i);
+                }
+                else{
+                    int assignedElevator = selectElevator(startingFloor, passengers[i]->direction);
+                    informElevatorOfRequest(assignedElevator, startingFloor, passengers[i]->direction);
 
-                log += "\n\tFloor Request: p" + to_string(passengers[i]->id)  +  " f" + to_string(startingFloor) + " " + passengers[i]->direction;
+                    log += "\n\tFloor Request: p" + to_string(passengers[i]->id)  +  " f" + to_string(startingFloor) + " " + passengers[i]->direction;
+                }
 
             }
             if (passengers[i]->floorRequestTimeStep > timestep || !passengers[i]->isInElevator){
@@ -235,6 +251,8 @@ void SimulationController::runSimulation(){
                 removePassengerFromActive(i);
             }
         }
+
+        //loop through events and check for any occuring at the current timestep
         for(int k = 0; k < numFutureEvents; k++){
             int i = futureEvents[k];
             if (events[i]->timestep == timestep){
@@ -296,6 +314,8 @@ void SimulationController::runSimulation(){
         for(int i=0; i<numTempSafetyEvents; i++){
             currSafetyEvents += tempSafetyEvents[i] + "\n";
         }
+
+        //update GUI
         emit updateTimestep(timestep);
         emit updateLog(QString::fromStdString(log));
         emit updateSafetyEvents(QString::fromStdString(currSafetyEvents));
@@ -309,6 +329,7 @@ void SimulationController::runSimulation(){
             }
         }
 
+        //check if simulation should end
         if(numFutureEvents==0 && numActivePassengers==0 && elevatorsAllFinished){
            string finishedMessage = "\tAll events handled";
            emit updateLog(QString::fromStdString(finishedMessage));
@@ -322,7 +343,7 @@ void SimulationController::runSimulation(){
 }
 
 void SimulationController::onboardElevator(Elevator* elevator, string* log){
-
+    //board passengers onto the given elevator at the given floor
     for(int k = 0; k < numActivePassengers; k++){
         int i = activePassengers[k];
         if(!passengers[i]->isInElevator && passengers[i]->startingFloor==elevator->currFloor && passengers[i]->direction==elevator->goalDirection){
@@ -337,9 +358,10 @@ void SimulationController::onboardElevator(Elevator* elevator, string* log){
 }
 
 void SimulationController::unloadElevator(Elevator* elevator, string* log){
+    //unload passengers from the given elevator onto the  given floor
     if(elevator->recalled  && elevator->recalledFloor == elevator->currFloor){
         *log += "\n\tElevator Event: e" + to_string(elevator->id) + " asks passengers to disembark via audio/visual displays.";
-        elevator->recalled = false;
+
     }
     for(int i = 0; i < numPassengers; i++){
         if((passengers[i]->isInElevator && passengers[i]->inElevator==elevator && passengers[i]->destination==elevator->currFloor) || (passengers[i]->isInElevator && passengers[i]->inElevator==elevator  && elevator->recalled  && elevator->recalledFloor == elevator->currFloor)){
@@ -347,6 +369,7 @@ void SimulationController::unloadElevator(Elevator* elevator, string* log){
             passengers[i]->disembarkElevator();
         }
     }
+    elevator->recalled = false;
 }
 
 void  SimulationController::respondToBuildingFireAlarm(string*  log){
@@ -447,7 +470,7 @@ void SimulationController::stop(){
 string SimulationController::getElevatorStr(){
     string txt = "";
     for(int i = 0; i < numElevators; i++){
-        txt += "Elevator" + to_string(elevators[i]->id) + ": on floor " + to_string(elevators[i]->currFloor) + ", currently " + elevators[i]->currState + "\n";
+        txt += "Elevator e" + to_string(elevators[i]->id) + ": on floor " + to_string(elevators[i]->currFloor) + ", currently " + elevators[i]->currState + "\n";
     }
     return txt;
 }

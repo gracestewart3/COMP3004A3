@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: Door
+ PURPOSE: To represent the doors of a specific elevator in the simulation
+*/
 #ifndef DOOR_H
 #define DOOR_H
 #include <string>

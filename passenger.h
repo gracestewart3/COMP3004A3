@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: Passenger
+ PURPOSE: To represent a passenger in the elevator simulation
+*/
 #ifndef PASSENGER_H
 #define PASSENGER_H
 #include "behaviour.h"

@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: SimulationController
+ PURPOSE: To run the elevator simulation, and update the passenger objects, elevator objects, and GUI accordingly
+*/
 #ifndef SIMULATIONCONTROLLER_H
 #define SIMULATIONCONTROLLER_H
 

@@ -8,8 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->main_stack->setCurrentIndex(1);
-    ui->passengers_added_label->hide();
-    ui->events_added_label->hide();
     ui->pause_btn->hide();
     ui->stop_btn->hide();
 
@@ -49,11 +47,9 @@ void MainWindow::handleNewPassenger(int floor, int time, int dest, Behaviour** b
     passengers[numPassengers] = newPassenger;
     numPassengers++;
 
-    ui->passengers_added_label->show();
-
     QString message;
-    message = QString::asprintf("Passenger %d:\nStarting on floor %d at time %d, going %s to floor %d.\n", newPassenger->id, floor, time, direction.c_str(), dest);
-    ui->passenger_display->setText(ui->passenger_display->text() + "\n" + message);
+    message = QString::asprintf("Passenger p%d:\nStarting on f%d at t%d, going %s to f%d.\n", newPassenger->id, floor, time, direction.c_str(), dest);
+    ui->passenger_display->append(message);
 
 }
 void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific, int id){
@@ -64,17 +60,16 @@ void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific,
 
     string event_str;
     if (isElevatorSpecific){
-        event_str = "on elevator " + to_string(id) + ", ";
+        event_str = "on e" + to_string(id) + ", ";
     }
     else{
         event_str = "";
     }
 
-     ui->events_added_label->show();
 
     QString message;
-    message = QString::asprintf("%s event %sat timestep %d.\n", event.c_str(), event_str.c_str(), time);
-    ui->event_display->setText(ui->event_display->text() + "\n" + message);
+    message = QString::asprintf("%s event %sat t%d.\n", event.c_str(), event_str.c_str(), time);
+    ui->event_display->append(message);
 }
 
 void MainWindow::on_start_btn_clicked(){

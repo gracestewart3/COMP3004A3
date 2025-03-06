@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: AddPassengerDialog
+ PURPOSE: To provide the user with a GUI to add a new passenger to the simulation
+*/
 #ifndef ADDPASSENGERDIALOG_H
 #define ADDPASSENGERDIALOG_H
 

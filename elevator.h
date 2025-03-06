@@ -1,3 +1,7 @@
+/*
+ CLASS NAME: Elevator
+ PURPOSE: To represent an elevator in the simulation
+*/
 #ifndef ELEVATOR_H
 #define ELEVATOR_H
 
