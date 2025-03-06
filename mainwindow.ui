@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>942</width>
-    <height>674</height>
+    <width>962</width>
+    <height>672</height>
    </rect>
   </property>
   <property name="palette">
@@ -81,7 +81,7 @@
    <widget class="QStackedWidget" name="main_stack">
     <property name="geometry">
      <rect>
-      <x>-10</x>
+      <x>0</x>
       <y>0</y>
       <width>951</width>
       <height>561</height>
@@ -206,8 +206,8 @@
      <widget class="QLCDNumber" name="timestep">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>70</y>
+        <x>800</x>
+        <y>20</y>
         <width>131</width>
         <height>51</height>
        </rect>
@@ -373,8 +373,8 @@
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>50</y>
+        <x>800</x>
+        <y>0</y>
         <width>121</width>
         <height>17</height>
        </rect>
@@ -387,37 +387,6 @@
       <property name="text">
        <string>Current Timestep:</string>
       </property>
-     </widget>
-     <widget class="QFrame" name="elevator_frame">
-      <property name="geometry">
-       <rect>
-        <x>19</x>
-        <y>69</y>
-        <width>641</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
      </widget>
      <widget class="QTextBrowser" name="log_console">
       <property name="geometry">
@@ -549,10 +518,10 @@ p, li { white-space: pre-wrap; }
      <widget class="QTextBrowser" name="active_safety_events">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>150</y>
-        <width>271</width>
-        <height>81</height>
+        <x>480</x>
+        <y>90</y>
+        <width>461</width>
+        <height>111</height>
        </rect>
       </property>
       <property name="palette">
@@ -604,14 +573,105 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>130</y>
+        <x>480</x>
+        <y>70</y>
         <width>171</width>
         <height>17</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <underline>true</underline>
+       </font>
+      </property>
       <property name="text">
        <string>Active Safety Events:</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>200</y>
+        <width>921</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>91</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Elevators:</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="elevators">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>451</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>153</red>
+            <green>193</green>
+            <blue>241</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>153</red>
+            <green>193</green>
+            <blue>241</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>206</red>
+            <green>223</green>
+            <blue>245</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
       </property>
      </widget>
     </widget>
@@ -903,6 +963,15 @@ p, li { white-space: pre-wrap; }
             </color>
            </brush>
           </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="Button">
@@ -914,14 +983,32 @@ p, li { white-space: pre-wrap; }
             </color>
            </brush>
           </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="Button">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
-             <red>98</red>
-             <green>160</green>
-             <blue>234</blue>
+             <red>153</red>
+             <green>193</green>
+             <blue>241</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>154</red>
+             <green>153</green>
+             <blue>150</blue>
             </color>
            </brush>
           </colorrole>
@@ -930,6 +1017,9 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="text">
         <string>Start</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -947,6 +1037,15 @@ p, li { white-space: pre-wrap; }
             </color>
            </brush>
           </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="Button">
@@ -958,14 +1057,32 @@ p, li { white-space: pre-wrap; }
             </color>
            </brush>
           </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="Button">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
-             <red>98</red>
-             <green>160</green>
-             <blue>234</blue>
+             <red>153</red>
+             <green>193</green>
+             <blue>241</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>154</red>
+             <green>153</green>
+             <blue>150</blue>
             </color>
            </brush>
           </colorrole>
@@ -974,6 +1091,9 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="text">
         <string>Stop</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -991,6 +1111,15 @@ p, li { white-space: pre-wrap; }
             </color>
            </brush>
           </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
          </active>
          <inactive>
           <colorrole role="Button">
@@ -1002,14 +1131,32 @@ p, li { white-space: pre-wrap; }
             </color>
            </brush>
           </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="Button">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
-             <red>98</red>
-             <green>160</green>
-             <blue>234</blue>
+             <red>153</red>
+             <green>193</green>
+             <blue>241</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>154</red>
+             <green>153</green>
+             <blue>150</blue>
             </color>
            </brush>
           </colorrole>
@@ -1018,6 +1165,9 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="text">
         <string>Pause</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

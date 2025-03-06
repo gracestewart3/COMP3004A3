@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     passengers = new Passenger*[MAX_ARR];
     numEvents = 0;
     events = new SafetyEvent*[MAX_ARR];
+    simulationStarted = false;
 }
 
 MainWindow::~MainWindow()
@@ -76,36 +77,49 @@ void MainWindow::handleNewEvent(string event, int time, bool isElevatorSpecific,
     ui->event_display->setText(ui->event_display->text() + "\n" + message);
 }
 
-void MainWindow::on_start_btn_clicked(){//eventually seperate the behaviour for initial start and resume
-    SimulationController* controller = new SimulationController(events, numEvents, passengers, numPassengers, ui->num_elevators->text().toInt(), ui->num_floors->text().toInt());
-    QObject::connect(controller, &SimulationController::updateTimestep, this, &MainWindow::handleNewTimestep);
-    QObject::connect(controller, &SimulationController::updateLog, this, &MainWindow::handleNewLog);
-    QObject::connect(controller, &SimulationController::updateSafetyEvents, this, &MainWindow::handleNewSafetyEvents);
-    ui->main_stack->setCurrentIndex(0);
-    ui->pause_btn->show();
-    ui->stop_btn->show();
-    for(int i=ui->num_elevators->text().toInt(); i>0;i--){
-        addElevator();
+void MainWindow::on_start_btn_clicked(){
+    if(!simulationStarted){
+        SimulationController* controller = new SimulationController(events, numEvents, passengers, numPassengers, ui->num_elevators->text().toInt(), ui->num_floors->text().toInt());
+        QObject::connect(controller, &SimulationController::updateTimestep, this, &MainWindow::handleNewTimestep);
+        QObject::connect(controller, &SimulationController::updateLog, this, &MainWindow::handleNewLog);
+        QObject::connect(controller, &SimulationController::updateSafetyEvents, this, &MainWindow::handleNewSafetyEvents);
+        QObject::connect(controller, &SimulationController::updateElevators, this, &MainWindow::handleNewElevatorStr);
+        QObject::connect(this, &MainWindow::pauseSimulation, controller, &SimulationController::pause);
+        QObject::connect(this, &MainWindow::resumeSimulation, controller, &SimulationController::resume);
+        QObject::connect(this, &MainWindow::stopSimulation, controller, &SimulationController::stop);
+        ui->main_stack->setCurrentIndex(0);
+        ui->pause_btn->show();
+        ui->stop_btn->show();
+
+
+        QtConcurrent::run([controller]() {//run concurrently so that it can send signals
+            controller->runSimulation();
+        });
+        simulationStarted = true;
     }
+    else{
+        ui->pause_btn->setChecked(false);
+        ui->start_btn->setChecked(true);
+        emit resumeSimulation();
+    }
+}
 
-    QtConcurrent::run([controller]() {//run concurrently so that it can send signals
-        controller->runSimulation();
-    });
+void MainWindow::on_pause_btn_clicked(){
+    ui->pause_btn->setChecked(true);
+    ui->start_btn->setChecked(false);
+    emit pauseSimulation();
+}
 
+void MainWindow::on_stop_btn_clicked(){
+    ui->stop_btn->setChecked(true);
+    ui->start_btn->setChecked(false);
+    ui->pause_btn->setChecked(false);
+
+    emit stopSimulation();
 
 }
 
-void MainWindow::addElevator(){
 
-    QHBoxLayout* layout = qobject_cast<QHBoxLayout*>(ui->elevator_frame->layout());
-
-    QString elevatorText = tr("Elevator #%1").arg(layout->count());
-
-    QPushButton* button = new QPushButton(elevatorText, ui->elevator_frame);
-
-    layout->insertWidget(0, button);
-
-}
 
 void MainWindow::handleNewTimestep(int time){
     ui->timestep->display(time);
@@ -117,4 +131,18 @@ void MainWindow::handleNewLog(QString txt){
 
 void MainWindow::handleNewSafetyEvents(QString txt){
     ui->active_safety_events->setText(txt);
+}
+
+void MainWindow::handleNewElevatorStr(QString txt){
+    ui->elevators->setText(txt);
+}
+
+void MainWindow::handleEndSimulation() {
+    ui->stop_btn->setEnabled(false);
+    ui->start_btn->setEnabled(false);
+    ui->pause_btn->setEnabled(false);
+    QObject* senderObj = sender();
+    if (senderObj) {
+        senderObj->deleteLater();
+    }
 }

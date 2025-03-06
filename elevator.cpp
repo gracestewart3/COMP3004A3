@@ -9,16 +9,10 @@ Elevator::Elevator(int elevatorId, int floor, string state, string dir, string g
     recalled=recall;
     recalledFloor=recFlr;
     door = new Door();
-    floorSensor = new FloorSensor;
-    announcementSystem = new AnnouncementSystem;
-    bell = new Bell;
 }
 
 Elevator::~Elevator(){
     delete door;
-    delete floorSensor;
-    delete announcementSystem;
-    delete bell;
 }
 
 void Elevator::enqueueRequest(int floor){

@@ -26,6 +26,8 @@ private slots:
     void on_add_event_clicked();
     void on_add_passenger_clicked();
     void on_start_btn_clicked();
+    void on_pause_btn_clicked();
+    void on_stop_btn_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -35,6 +37,7 @@ private:
     int numPassengers;
     SafetyEvent** events;
     int numEvents;
+    bool simulationStarted;
     void addElevator();
 
 public slots:
@@ -43,6 +46,13 @@ public slots:
     void handleNewLog(QString);
     void handleNewSafetyEvents(QString);
     void handleNewEvent(string, int, bool, int);
+    void handleEndSimulation();
+    void handleNewElevatorStr(QString);
+
+signals:
+    void pauseSimulation();
+    void resumeSimulation();
+    void stopSimulation();
 
 };
 #endif // MAINWINDOW_H

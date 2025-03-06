@@ -4,7 +4,6 @@
 #include "passenger.h"
 #include "safetyevent.h"
 #include "elevator.h"
-#include "floor.h"
 #include <QObject>
 #include <QString>
 #include <QtDebug>
@@ -17,23 +16,26 @@ class SimulationController : public QObject {
     Q_OBJECT
 
     public:
-        SimulationController(SafetyEvent**, int, Passenger**, int, int, int, bool=false);
+        SimulationController(SafetyEvent**, int, Passenger**, int, int, int);
         ~SimulationController();
         void runSimulation();
+
     private:
-        bool simulationIsComplete;
         int numElevators;
         int numFloors;
         int numPassengers;
         int numEvents;
+
         int numActivePassengers;
-        int* activePassengers; //indexes/ids of passengers with >= 1 behaviour with a future timestep
-        int* futureEvents; //indexes of events with a future timestep
+        int* activePassengers;
+        int* futureEvents;
         int numFutureEvents;
+        bool isPaused;
+        bool isStopped;
+
         Elevator** elevators;
         Passenger** passengers;
         SafetyEvent** events;
-        Floor** floors;
         void removePassengerFromActive(int);
         void removeEventFromFuture(int);
         int selectElevator(int, string);
@@ -48,10 +50,19 @@ class SimulationController : public QObject {
         void respondToDoorClose(string *, int, int);
         void respondToOverload(string *, int);
         void respondToPowerOutage(string *);
-signals:
-    void updateTimestep(int);
-    void updateLog(QString);
-    void updateSafetyEvents(QString);
+        string getElevatorStr();
+
+    public slots:
+        void pause();
+        void resume();
+        void stop();
+
+    signals:
+        void updateTimestep(int);
+        void updateLog(QString);
+        void updateSafetyEvents(QString);
+        void updateElevators(QString);
+        void endSimulation();
 };
 
 #endif // SIMULATIONCONTROLLER_H

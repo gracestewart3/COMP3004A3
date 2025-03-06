@@ -2,9 +2,6 @@
 #define ELEVATOR_H
 
 #include "door.h"
-#include "floorsensor.h"
-#include "announcementsystem.h"
-#include "bell.h"
 
 #include <string>
 #include <set>
@@ -20,9 +17,6 @@ public:
     string direction;
     string goalDirection;
     Door* door;
-    FloorSensor* floorSensor;
-    AnnouncementSystem* announcementSystem;
-    Bell* bell;
     set<int> requests;
     bool recalled;
     int recalledFloor;
