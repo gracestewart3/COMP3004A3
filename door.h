@@ -12,7 +12,6 @@ class Door
 public:
     Door(bool=false);
     bool doorOpen;
-    int numDoorEvents;
     void openDoor();
     void closeDoor();
 
