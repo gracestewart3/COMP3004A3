@@ -200,7 +200,7 @@ void SimulationController::runSimulation(){
             }
         }
 
-        //looop through passenngers to check for floor requests or other behaviours
+        //loop through passengers to check for floor requests or other behaviours
         for(int k = 0; k < numActivePassengers; k++){
             int i = activePassengers[k];
             bool pIsActive = false;
@@ -347,7 +347,6 @@ void SimulationController::onboardElevator(Elevator* elevator, string* log){
     for(int k = 0; k < numActivePassengers; k++){
         int i = activePassengers[k];
         if(!passengers[i]->isInElevator && passengers[i]->startingFloor==elevator->currFloor && passengers[i]->direction==elevator->goalDirection){
-            passengers[i]->boardElevator(elevator);
             *log += "\n\tPassenger Event: p" + to_string(passengers[i]->id) + " enters e" + to_string(elevator->id);
             passengers[i]->boardElevator(elevator);
             *log += "\n\tPassenger Event: p" + to_string(passengers[i]->id) + " requests f"  + to_string(passengers[i]->destination) + " on e" + to_string(elevator->id);
